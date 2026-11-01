@@ -1,0 +1,117 @@
+{
+  "name": "Aperture Stepstone DACH & Belgium Buying Signals to Clay & HeyReach",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 6 * * 1"
+            }
+          ]
+        }
+      },
+      "id": "a1b2c3d4-0001-4000-8000-000000000001",
+      "name": "Monday 06:00 UTC Schedule",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.apify.com/v2/acts/aperture~stepstone-dach-buying-signal-scraper/run-sync-get-dataset-items?maxTotalChargeUsd=2.00",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.APIFY_API_TOKEN || $env.APIFY_TOKEN }}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"keywords\": [\"Account Executive\", \"SDR\", \"BDR\", \"RevOps\"],\n  \"country\": \"DE\",\n  \"maxItems\": 100,\n  \"scraperMode\": \"enriched_with_email\",\n  \"seniorityFilter\": [\"mid\", \"senior\", \"manager\", \"director\", \"vp\", \"cxo\"],\n  \"blacklistDomains\": [\"existing-customer.de\"]\n}",
+        "options": {
+          "timeout": 180000
+        }
+      },
+      "id": "a1b2c3d4-0002-4000-8000-000000000002",
+      "name": "Run Stepstone DACH Buying-Signal Scraper",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        540,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $env.CLAY_OR_HEYREACH_WEBHOOK_URL }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"company\": {{ JSON.stringify($json.company) }},\n  \"domain\": {{ JSON.stringify($json.domain) }},\n  \"geo\": {{ JSON.stringify($json.geo) }},\n  \"role_title\": {{ JSON.stringify($json.role_title) }},\n  \"seniority_band\": {{ JSON.stringify($json.seniority_band) }},\n  \"signal_detail\": {{ JSON.stringify($json.signal_detail) }},\n  \"signal_date\": {{ JSON.stringify($json.signal_date) }},\n  \"evidence_url\": {{ JSON.stringify($json.evidence_url) }},\n  \"contact_email\": {{ JSON.stringify($json.contact_email) }},\n  \"email_verification_status\": {{ JSON.stringify($json.email_verification_status) }},\n  \"is_named_decision_maker\": {{ $json.email_verification_status === 'ok' }},\n  \"mx_provider\": {{ JSON.stringify($json.mx_provider) }},\n  \"ppe_event_charged\": {{ JSON.stringify($json.ppe_event_charged) }}\n}"
+      },
+      "id": "a1b2c3d4-0003-4000-8000-000000000003",
+      "name": "Deliver DACH Signals to Clay / HeyReach Webhook",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        860,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Monday 06:00 UTC Schedule": {
+      "main": [
+        [
+          {
+            "node": "Run Stepstone DACH Buying-Signal Scraper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Stepstone DACH Buying-Signal Scraper": {
+      "main": [
+        [
+          {
+            "node": "Deliver DACH Signals to Clay / HeyReach Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "UTC"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "publisher": "Aperture — Data Aggregation Solutions (https://apify.com/aperture)",
+    "description": "Weekly Monday 06:00 UTC DACH & Belgium hiring buying-signal scraper + Impressum named-contact enrichment feeding Clay or HeyReach."
+  }
+}

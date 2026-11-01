@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="36" viewBox="0 0 360 36">
+  <defs>
+    <linearGradient id="bgGrad1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#090E1A"/>
+    </linearGradient>
+    <linearGradient id="emeraldGrad1" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <linearGradient id="borderGrad1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#1E293B" stop-opacity="0.6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Pill Background -->
+  <rect x="0.5" y="0.5" width="359" height="35" rx="7" fill="url(#bgGrad1)" stroke="url(#borderGrad1)" stroke-width="1"/>
+
+  <!-- Left Pill: Emerald Shield & NAMED CONTACT -->
+  <rect x="3" y="3" width="140" height="30" rx="5" fill="url(#emeraldGrad1)"/>
+  <path d="M 14,10 L 20,12.5 L 20,18 C 20,21.5 17,24.5 14,26 C 11,24.5 8,21.5 8,18 L 8,12.5 Z" fill="#064E3B" stroke="#A7F3D0" stroke-width="1"/>
+  <path d="M 11.5,17.5 L 13.5,19.5 L 16.8,15.5" fill="none" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="80" y="22.5" text-anchor="middle" fill="#FFFFFF" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="700">NAMED CONTACT</text>
+
+  <!-- Right Section: $0.008 OK • $0.002 FREE ROLE -->
+  <text x="249" y="22.5" text-anchor="middle" fill="#F8FAFC" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, Helvetica, Arial, sans-serif" font-size="12.5" font-weight="700">$0.008 OK • $0.002 FREE ROLE</text>
+</svg>
