@@ -6,7 +6,7 @@
         "-y",
         "@apify/actors-mcp-server",
         "--actors",
-        "aperture/stepstone-dach-buying-signal-scraper,aperture/seek-anz-buying-signal-scraper,aperture/france-buying-signal-scraper,aperture/eu-uk-procurement-award-signal-scraper,aperture/eu-uk-executive-incorporation-signal-scraper,aperture/b2b-buying-signal-icp-aggregator"
+        "aperture/stepstone-dach-buying-signal-scraper,aperture/seek-anz-buying-signal-scraper,aperture/france-buying-signal-scraper,aperture/b2b-buying-signal-icp-aggregator,aperture/eu-uk-procurement-award-signal-scraper,aperture/eu-uk-executive-incorporation-signal-scraper,aperture/biotech-clinical-trial-buying-signal-scraper,aperture/linkedin-ats-b2b-buying-signal-scraper,aperture/european-impressum-contact-bulk-enricher,aperture/global-b2b-signal-suite-unlimited"
       ],
       "env": {
         "APIFY_TOKEN": "YOUR_APIFY_API_TOKEN"

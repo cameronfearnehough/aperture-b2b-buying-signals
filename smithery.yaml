@@ -1,0 +1,62 @@
+# smithery.yaml — Aperture B2B Buying-Signal & Statutory Enrichment MCP Server Configuration
+# Specification: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - apifyToken
+    properties:
+      apifyToken:
+        type: string
+        description: "Your Apify API token from https://console.apify.com/account/integrations"
+      defaultActors:
+        type: array
+        items:
+          type: string
+        description: "List of Aperture Actor slugs or IDs to expose as callable MCP tools."
+        default:
+          - "vivid_astronaut/stepstone-dach-buying-signal-scraper"
+          - "vivid_astronaut/seek-anz-buying-signal-scraper"
+          - "vivid_astronaut/france-buying-signal-scraper"
+          - "vivid_astronaut/b2b-buying-signal-icp-aggregator"
+          - "vivid_astronaut/eu-uk-procurement-award-signal-scraper"
+          - "vivid_astronaut/eu-uk-executive-incorporation-signal-scraper"
+          - "vivid_astronaut/biotech-clinical-trial-buying-signal-scraper"
+          - "vivid_astronaut/linkedin-ats-b2b-buying-signal-scraper"
+          - "vivid_astronaut/european-impressum-contact-bulk-enricher"
+          - "vivid_astronaut/global-b2b-signal-suite-unlimited"
+      scraperMode:
+        type: string
+        enum:
+          - basic
+          - enriched_with_email
+        default: enriched_with_email
+        description: "Default Pay-Per-Event scraping tier: 'basic' ($0.002 / $0.003 base signals) or 'enriched_with_email' ($0.008 / $0.009 verified named contacts with free role_fallback inboxes)."
+  commandFunction: |-
+    (config) => ({
+      command: 'npx',
+      args: [
+        '-y',
+        '@apify/actors-mcp-server',
+        '--actors',
+        (Array.isArray(config.defaultActors) && config.defaultActors.length > 0)
+          ? config.defaultActors.join(',')
+          : [
+              'vivid_astronaut/stepstone-dach-buying-signal-scraper',
+              'vivid_astronaut/seek-anz-buying-signal-scraper',
+              'vivid_astronaut/france-buying-signal-scraper',
+              'vivid_astronaut/b2b-buying-signal-icp-aggregator',
+              'vivid_astronaut/eu-uk-procurement-award-signal-scraper',
+              'vivid_astronaut/eu-uk-executive-incorporation-signal-scraper',
+              'vivid_astronaut/biotech-clinical-trial-buying-signal-scraper',
+              'vivid_astronaut/linkedin-ats-b2b-buying-signal-scraper',
+              'vivid_astronaut/european-impressum-contact-bulk-enricher',
+              'vivid_astronaut/global-b2b-signal-suite-unlimited'
+            ].join(',')
+      ],
+      env: {
+        APIFY_TOKEN: config.apifyToken
+      }
+    })

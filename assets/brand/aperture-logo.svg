@@ -20,6 +20,9 @@
     </linearGradient>
   </defs>
 
+  <!-- Solid opaque canvas fill (#0F172A) to eliminate transparent corners (LinkedIn white-box bug) -->
+  <rect width="512" height="512" fill="#0F172A"/>
+
   <!-- Dark Slate Squircle Card -->
   <rect x="8" y="8" width="496" height="496" rx="96" ry="96" fill="url(#cardBg)" stroke="#1E293B" stroke-width="2"/>
   <rect x="8" y="8" width="496" height="496" rx="96" ry="96" fill="url(#centerGlow)"/>
